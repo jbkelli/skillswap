@@ -19,8 +19,8 @@ api.interceptors.request.use((config) => {
 
 // API functions
 export const authAPI = {
-  login: (email, password) => api.post('/auth/login', { email, password }),
-  signup: (userData) => api.post('/auth/signup', userData),
+  login: (email, password) => api.post('/api/auth/login', { email, password }),
+  signup: (userData) => api.post('/api/auth/signup', userData),
   getCurrentUser: () => api.get('/users/me').then(res => {
     console.log('Current user response:', res.data);
     return res.data.data.user;
