@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [filters, setFilters] = useState({ skillsOffered: '', skillsWanted: '' });
   const [sendingRequest, setSendingRequest] = useState(null);
   const [acceptedRequests, setAcceptedRequests] = useState([]); // Track accepted requests
-  const { user, loading: authloading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   
   if (authLoading || !user) {
   return (
