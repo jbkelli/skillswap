@@ -270,7 +270,7 @@ const Dashboard = () => {
           <div className="bg-white p-8 rounded-lg shadow-md max-w-md mx-auto">
             <h2 className="text-xl font-semibold mb-4">Welcome to SkillSwap, {user.name}!</h2>
             <p className="text-gray-600 mb-4">
-              You're the first user here! Share SkillSwap with others to start swapping skills.
+              No other users found. Share SkillSwap with others to start swapping skills.
             </p>
             <p className="text-sm text-gray-500">
               Complete your profile to be ready when others join.
