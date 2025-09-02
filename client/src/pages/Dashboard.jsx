@@ -54,13 +54,8 @@ const Dashboard = () => {
       return;
     }
     try {
-      const sentRes = await swapRequestsAPI.getSentRequests();
-      const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
-      const response = await usersAPI.getUsers(user._id);
-      const otherUsers = response.data.data.users.filter(u => 
-        user && u._id !== user._id
-      );
-      setUsers(otherUsers);
+  const response = await usersAPI.getUsers(user._id);
+  setUsers(response.data.data.users);
     } catch (err) {
       setError('Failed to load users: ' + (err.response?.data?.message || err.message));
     } finally {
