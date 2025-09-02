@@ -34,10 +34,10 @@ export const usersAPI = {
 };
 
 export const swapRequestsAPI = {
-  sendRequest: (requestData) => api.post('/swap-requests', requestData),
-  getReceivedRequests: () => api.get('/swap-requests/received'),
-  getSentRequests: () => api.get('/swap-requests/sent'),
-  updateRequest: (requestId, status) => api.patch(`/swap-requests/${requestId}`, { status }),
+  sendRequest: (requestData) => api.post('/api/swap-requests', requestData),
+  getReceivedRequests: () => api.get('/api/swap-requests/received'),
+  getSentRequests: () => api.get('/api/swap-requests/sent'),
+  updateRequest: (requestId, status) => api.patch(`/api/swap-requests/${requestId}`, { status }),
 };
 
 export default api;
