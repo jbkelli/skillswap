@@ -29,7 +29,7 @@ export const authAPI = {
 };
 
 export const usersAPI = {
-  getUsers: () => api.get('/api/users'),
+  getUsers: () => api.get(`/api/users?exclude=${user._id}`),
   updateProfile: (userData) => api.patch('/api/users/me', userData),
 };
 

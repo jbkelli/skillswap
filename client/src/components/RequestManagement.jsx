@@ -38,7 +38,12 @@ const RequestManagement = () => {
           req._id === requestId ? response.data.data.request : req
         ));
       }
-      await fetchRequests(); // Refresh to get updated data
+      setReceivedRequests(prev =>
+        prev.map(req =>
+            req._id === requestId ? response.data.data.request : req
+        )
+        );
+
     } catch (err) {
       console.error('Failed to update request:', err);
     } finally {

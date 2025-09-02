@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
 
     // 2. Basic Filtering: If query params exist, use them to find users
     // This is a very simple implementation. For a better one, you'd use advanced filtering.
-    const users = await User.find(queryObj);
+    const excludeId = req.query.exclude;
+    const users = await User.find({ _id: { $ne: excludeId }, ...queryObj });
 
     // 3. Send response
     res.status(200).json({

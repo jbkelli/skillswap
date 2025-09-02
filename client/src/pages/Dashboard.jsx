@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [sendingRequest, setSendingRequest] = useState(null);
   const [acceptedRequests, setAcceptedRequests] = useState([]); // Track accepted requests
   const { user } = useAuth();
+  
 
   useEffect(() => {
     if (user) {
