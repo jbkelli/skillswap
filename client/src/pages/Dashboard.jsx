@@ -49,20 +49,27 @@ const Dashboard = () => {
 
   const fetchUsers = async () => {
     if (!user) return; // Prevent running if user is not defined
-    try {
-      const sentRes = await swapRequestsAPI.getSentRequests();
-      const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
-  const response = await usersAPI.getUsers(user._id);
-      const otherUsers = response.data.data.users.filter(u => 
-        user && u._id !== user._id
-      );
-      setUsers(otherUsers);
-    } catch (err) {
-      setError('Failed to load users: ' + (err.response?.data?.message || err.message));
-    } finally {
-      setLoading(false);
-    }
-  };
+     try {
+    const [usersRes, sentRes] = await Promise.all([
+      usersAPI.getUsers(),
+      swapRequestsAPI.getSentRequests()
+    ]);
+
+    const allUsers = usersRes.data.data.users;
+    const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
+
+    const otherUsers = allUsers.filter(u => 
+      u._id !== user._id && !sentIds.includes(u._id)
+    );
+
+    setUsers(otherUsers);
+  } catch (err) {
+    console.error('Failed to load users:', err);
+    setError('Failed to load users: ' + (err.response?.data?.message || err.message));
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Fetch accepted swap requests
   const fetchAcceptedRequests = async () => {
