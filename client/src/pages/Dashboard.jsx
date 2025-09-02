@@ -141,38 +141,9 @@ const Dashboard = () => {
   return (
     <div className="max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold text-center mb-8">Find Your Skill Swap Partner</h1>
-      
-      {/* Filters */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-xl font-semibold mb-4">Filter Users</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Skills Offered</label>
-            <input
-              type="text"
-              placeholder="e.g., JavaScript, Guitar"
-              value={filters.skillsOffered}
-              onChange={(e) => setFilters(prev => ({ ...prev, skillsOffered: e.target.value }))}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Skills Wanted</label>
-            <input
-              type="text"
-              placeholder="e.g., Cooking, Design"
-              value={filters.skillsWanted}
-              onChange={(e) => setFilters(prev => ({ ...prev, skillsWanted: e.target.value }))}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-        </div>
-      </div>
-
-      
       {/* Users Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredUsers.map((otherUser) => (
+        {users.map((otherUser) => (
           <div key={otherUser._id} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
             <h3 className="text-xl font-semibold text-gray-800">{otherUser.name}</h3>
             <p className="text-gray-600 text-sm mb-4">{otherUser.bio || 'No bio yet'}</p>
