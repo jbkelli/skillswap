@@ -1,7 +1,8 @@
 // client/src/utils/api.js
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://skillswap-jfq6.onrender.com/';
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://skillswap-jfq6.onrender.com';
+const API_BASE_URL = rawBaseUrl.replace(/\/+$/, ''); // removes trailing slashes
 
 // Create axios instance
 const api = axios.create({
