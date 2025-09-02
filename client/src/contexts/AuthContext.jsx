@@ -40,29 +40,30 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (email, password) => {
-    try {
-      const response = await authAPI.login(email, password);
-      localStorage.setItem('token', response.data.token);
-      setUser(response.data.user);
-      window.location.reload(); // Force refresh to reload state and dashboard
-      return { success: true };
-    } catch (error) {
-      return { success: false, message: error.response?.data?.message || 'Login failed' };
-    }
-  };
+const login = async (email, password) => {
+  try {
+    const response = await authAPI.login(email, password);
+    localStorage.setItem('token', response.data.token);
+    setUser(response.data.data.user); 
+    window.location.reload();
+    return { success: true };
+  } catch (error) {
+    return { success: false, message: error.response?.data?.message || 'Login failed' };
+  }
+};
 
-  const signup = async (userData) => {
-    try {
-      const response = await authAPI.signup(userData);
-      localStorage.setItem('token', response.data.token);
-      setUser(response.data.user);
-      window.location.reload(); // Force refresh to reload state and dashboard
-      return { success: true };
-    } catch (error) {
-      return { success: false, message: error.response?.data?.message || 'Signup failed' };
-    }
-  };
+const signup = async (userData) => {
+  try {
+    const response = await authAPI.signup(userData);
+    localStorage.setItem('token', response.data.token);
+    setUser(response.data.data.user);
+    window.location.reload();
+    return { success: true };
+  } catch (error) {
+    return { success: false, message: error.response?.data?.message || 'Signup failed' };
+  }
+};
+
 
   const logout = () => {
     localStorage.removeItem('token');
