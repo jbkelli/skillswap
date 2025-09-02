@@ -10,8 +10,25 @@ const Dashboard = () => {
   const [filters, setFilters] = useState({ skillsOffered: '', skillsWanted: '' });
   const [sendingRequest, setSendingRequest] = useState(null);
   const [acceptedRequests, setAcceptedRequests] = useState([]); // Track accepted requests
-  const { user } = useAuth();
+  const { user, loading: authloading } = useAuth();
   
+  if (authLoading || !user) {
+  return (
+    <div className="text-center py-12">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+      <p className="mt-4 text-gray-600">Loading user data...</p>
+      <button 
+        onClick={() => {
+          localStorage.removeItem('token');
+          window.location.reload();
+        }}
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Reset Authentication
+      </button>
+    </div>
+  );
+}
 
   useEffect(() => {
     if (user) {
@@ -32,12 +49,15 @@ const Dashboard = () => {
 
   const fetchUsers = async () => {
     try {
+        const sentRes = await swapRequestsAPI.getSentRequests();
+const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
       const response = await usersAPI.getUsers();
       // Add null check for user
       const otherUsers = response.data.data.users.filter(u => 
         user && u._id !== user._id // Check if user exists before accessing ._id
       );
       setUsers(otherUsers);
+      
     } catch (err) {
       setError('Failed to load users: ' + (err.response?.data?.message || err.message));
     } finally {
@@ -73,7 +93,8 @@ const Dashboard = () => {
         u._id === toUserId ? { ...u, hasSentRequest: true } : u
       ));
       // Refetch accepted requests after sending
-      await fetchAcceptedRequests();
+      setAcceptedRequests(prev => [...prev, response.data.data.request]);
+
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to send request');
     } finally {
@@ -114,9 +135,7 @@ const Dashboard = () => {
     );
   }
   
-  if (loading || !user) {
-  return <div className="text-center">Loading user info...</div>;
-    }
+  if (loading) return <div className="text-center py-8">Loading users...</div>;
   if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
 
   // Debug: log acceptedRequests on every render
