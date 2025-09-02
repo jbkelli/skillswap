@@ -45,7 +45,7 @@ const login = async (email, password) => {
     const response = await authAPI.login(email, password);
     localStorage.setItem('token', response.data.token);
     setUser(response.data.data.user); 
-    window.location.reload();
+    navigate('/dashboard'); // after setting user
     return { success: true };
   } catch (error) {
     return { success: false, message: error.response?.data?.message || 'Login failed' };
@@ -57,7 +57,7 @@ const signup = async (userData) => {
     const response = await authAPI.signup(userData);
     localStorage.setItem('token', response.data.token);
     setUser(response.data.data.user);
-    window.location.reload();
+    navigate('/dashboard'); // after setting user
     return { success: true };
   } catch (error) {
     return { success: false, message: error.response?.data?.message || 'Signup failed' };
