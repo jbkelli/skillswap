@@ -199,6 +199,8 @@ const Dashboard = () => {
             </div>
             {/* Show contact info if swap request is accepted */}
             {(() => {
+              // Defensive: ensure user is defined before referencing
+              if (!user) return null;
               // Find if there's an accepted request between current user and this other user
               const accepted = acceptedRequests.find(r =>
                 (r.fromUser._id === user._id && r.toUser._id === otherUser._id) ||
