@@ -48,19 +48,24 @@ const Dashboard = () => {
   };
 
   const fetchUsers = async () => {
-    if (!user) return; // Prevent running if user is not defined
+    if (!user || !user._id) {
+      setError('User not loaded. Please log in again.');
+      setLoading(false);
+      return;
+    }
     try {
-    const response = await usersAPI.getUsers();
-    const allUsers = response.data.data.users;
-
-    console.log('Fetched users:', allUsers); // ✅ confirm in DevTools
-    setUsers(allUsers); // ✅ show everyone, including yourself
-  } catch (err) {
-    console.error('Failed to load users:', err);
-    setError('Failed to load users: ' + (err.response?.data?.message || err.message));
-  } finally {
-    setLoading(false);
-  }
+      const sentRes = await swapRequestsAPI.getSentRequests();
+      const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
+      const response = await usersAPI.getUsers(user._id);
+      const otherUsers = response.data.data.users.filter(u => 
+        user && u._id !== user._id
+      );
+      setUsers(otherUsers);
+    } catch (err) {
+      setError('Failed to load users: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setLoading(false);
+    }
 };
 
   // Fetch accepted swap requests
