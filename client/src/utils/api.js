@@ -22,15 +22,15 @@ api.interceptors.request.use((config) => {
 export const authAPI = {
   login: (email, password) => api.post('/api/auth/login', { email, password }),
   signup: (userData) => api.post('/api/auth/signup', userData),
-  getCurrentUser: () => api.get('/users/me').then(res => {
+  getCurrentUser: () => api.get('/api/users/me').then(res => {
     console.log('Current user response:', res.data);
     return res.data.data.user;
   }),
 };
 
 export const usersAPI = {
-  getUsers: () => api.get('/users'),
-  updateProfile: (userData) => api.patch('/users/me', userData),
+  getUsers: () => api.get('/api/users'),
+  updateProfile: (userData) => api.patch('/api/users/me', userData),
 };
 
 export const swapRequestsAPI = {
