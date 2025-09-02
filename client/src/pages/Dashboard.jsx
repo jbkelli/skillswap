@@ -7,7 +7,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState({ skillsOffered: '', skillsWanted: '' });
+  // Removed filters state
   const [sendingRequest, setSendingRequest] = useState(null);
   const [acceptedRequests, setAcceptedRequests] = useState([]); // Track accepted requests
   const { user, loading: authLoading } = useAuth();
@@ -100,19 +100,7 @@ const Dashboard = () => {
     }
   };
 
-  const filteredUsers = users.filter(otherUser => {
-    const matchesOffered = filters.skillsOffered ? 
-      otherUser.skillsOffered?.some(skill => 
-        skill.toLowerCase().includes(filters.skillsOffered.toLowerCase())
-      ) : true;
-    
-    const matchesWanted = filters.skillsWanted ? 
-      otherUser.skillsWanted?.some(skill => 
-        skill.toLowerCase().includes(filters.skillsWanted.toLowerCase())
-      ) : true;
-
-    return matchesOffered && matchesWanted;
-  });
+  // Removed filteredUsers logic
 
   // Show loading until user data is available
   if (!user) {
@@ -224,12 +212,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {filteredUsers.length === 0 && users.length > 0 && (
-        <div className="text-center text-gray-500 mt-12">
-          <p className="text-lg">No users found matching your filters.</p>
-          <p>Try adjusting your search criteria.</p>
-        </div>
-      )}
+  {/* Removed filter empty state */}
 
       {users.length === 0 && (
         <div className="text-center py-12">
