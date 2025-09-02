@@ -52,7 +52,7 @@ const Dashboard = () => {
     try {
       const sentRes = await swapRequestsAPI.getSentRequests();
       const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
-      const response = await usersAPI.getUsers();
+  const response = await usersAPI.getUsers(user._id);
       const otherUsers = response.data.data.users.filter(u => 
         user && u._id !== user._id
       );
