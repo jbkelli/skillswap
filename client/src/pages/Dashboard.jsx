@@ -49,20 +49,12 @@ const Dashboard = () => {
 
   const fetchUsers = async () => {
     if (!user) return; // Prevent running if user is not defined
-     try {
-    const [usersRes, sentRes] = await Promise.all([
-      usersAPI.getUsers(),
-      swapRequestsAPI.getSentRequests()
-    ]);
+    try {
+    const response = await usersAPI.getUsers();
+    const allUsers = response.data.data.users;
 
-    const allUsers = usersRes.data.data.users;
-    const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
-
-    const otherUsers = allUsers.filter(u => 
-      u._id !== user._id && !sentIds.includes(u._id)
-    );
-
-    setUsers(otherUsers);
+    console.log('Fetched users:', allUsers); // ✅ confirm in DevTools
+    setUsers(allUsers); // ✅ show everyone, including yourself
   } catch (err) {
     console.error('Failed to load users:', err);
     setError('Failed to load users: ' + (err.response?.data?.message || err.message));
