@@ -113,8 +113,10 @@ const Dashboard = () => {
       </div>
     );
   }
-
-  if (loading) return <div className="text-center py-8">Loading users...</div>;
+  
+  if (loading || !user) {
+  return <div className="text-center">Loading user info...</div>;
+    }
   if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
 
   // Debug: log acceptedRequests on every render
