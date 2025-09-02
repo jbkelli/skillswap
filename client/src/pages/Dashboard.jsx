@@ -48,16 +48,15 @@ const Dashboard = () => {
   };
 
   const fetchUsers = async () => {
+    if (!user) return; // Prevent running if user is not defined
     try {
-        const sentRes = await swapRequestsAPI.getSentRequests();
-const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
+      const sentRes = await swapRequestsAPI.getSentRequests();
+      const sentIds = sentRes.data.data.requests.map(r => r.toUser._id);
       const response = await usersAPI.getUsers();
-      // Add null check for user
       const otherUsers = response.data.data.users.filter(u => 
-        user && u._id !== user._id // Check if user exists before accessing ._id
+        user && u._id !== user._id
       );
       setUsers(otherUsers);
-      
     } catch (err) {
       setError('Failed to load users: ' + (err.response?.data?.message || err.message));
     } finally {
